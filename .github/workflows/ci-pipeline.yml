@@ -31,4 +31,6 @@ jobs:
         file: "./Calculator/Calculator/Dockerfile"
         context: Calculator
         push: true
-        tags: guyp/calculator:latest,guyp/calculator:1.0.0
+        tags: |
+          ghcr.io/guypritchard/calculator:latest
+          ghcr.io/guypritchard/calculator:1.0.0
