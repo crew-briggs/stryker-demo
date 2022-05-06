@@ -29,5 +29,6 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         file: "./Calculator/Calculator/Dockerfile"
+        context: "{{defaultContext}}"
         push: true
         tags: guyp/calculator:latest,guyp/calculator:1.0.0
