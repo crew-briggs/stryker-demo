@@ -30,7 +30,8 @@ jobs:
       with:
         file: "./Calculator/Calculator/Dockerfile"
         context: Calculator
+        registry: ghcr.io
         push: true
         tags: |
-          ghcr.io/guypritchard/calculator:latest
-          ghcr.io/guypritchard/calculator:1.0.0
+          guypritchard/calculator:latest
+          guypritchard/calculator:1.0.0
