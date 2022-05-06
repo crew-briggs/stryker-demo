@@ -51,7 +51,7 @@ jobs:
         recreate: true
         path: code-coverage-results.md
     - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: guyp/calculator:latest,guyp/calculator:1.0.0
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: guyp/calculator:latest,guyp/calculator:1.0.0
