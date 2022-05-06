@@ -25,6 +25,12 @@ jobs:
       run: dotnet restore Calculator/Calculator.sln
     - name: Build
       run: dotnet build Calculator/Calculator.sln --no-restore
+    - name: Log in to the Container registry
+      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
@@ -35,3 +41,4 @@ jobs:
         tags: |
           guypritchard/calculator:latest
           guypritchard/calculator:1.0.0
+        
