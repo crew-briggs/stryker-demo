@@ -1,6 +1,9 @@
 name: "Deploy container to ghcr"
 description: "Deploys container to github container registry"
 inputs:
+  ghcr-password:
+    requried: true
+    description: "Password for ghcr"
   container-name:
     required: true
     description: "Name of the container"
@@ -19,7 +22,7 @@ steps:
   with:
     registry: ghcr.io
     username: ${{ github.repository_owner }}
-    password: ${{ secrets.GITHUB_TOKEN }}
+    password: ${{ inputs.ghcr-password }}
   - name: Build and push
   uses: docker/build-push-action@v3
   with:
