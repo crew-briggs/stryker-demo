@@ -39,5 +39,5 @@ jobs:
         push: true
         tags: |
           ghcr.io/crew-briggs/calculator:latest
-          ghcr.io/crew-briggs/calculator:1.0.0
+          ghcr.io/crew-briggs/calculator:1.0.${{github.run_number}}
         
