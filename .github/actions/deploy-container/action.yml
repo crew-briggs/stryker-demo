@@ -16,16 +16,16 @@ inputs:
   container-context:
     required: false
     description: "The context of where to run the dockerfile from"
-  runs:
-  using: "composite"
-  steps:
-    name: Login to GitHub Container Registry
+runs:
+using: "composite"
+steps:
+  - name: Login to GitHub Container Registry
     uses: docker/login-action@v2
     with:
       registry: ghcr.io
       username: ${{ inputs.ghcr-username }}
       password: ${{ inputs.ghcr-password }}
-    - name: Build and push
+  - name: Build and push
     uses: docker/build-push-action@v3
     with:
       file: ${{ inputs.container-path }}
