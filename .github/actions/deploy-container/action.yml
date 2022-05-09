@@ -1,0 +1,31 @@
+name: "Deploy container to ghcr"
+description: "Deploys container to github container registry"
+inputs:
+  container-name:
+    required: true
+    description: "Name of the container"
+  container-path:
+    required: true
+    description: "Path to the containers Dockerfile"
+  container-context:
+    required: false
+    description: "The context of where to run the dockerfile from"
+
+runs:
+using: "composite"
+steps:
+  name: Login to GitHub Container Registry
+  uses: docker/login-action@v2
+  with:
+    registry: ghcr.io
+    username: ${{ github.repository_owner }}
+    password: ${{ secrets.GITHUB_TOKEN }}
+  - name: Build and push
+  uses: docker/build-push-action@v3
+  with:
+    file: ${{ inputs.container-path }}
+    context: ${{ inputs.container-context }}
+    push: true
+    tags: |
+      ghcr.io/crew-briggs/${{ inputs.container-name }}:latest
+      ghcr.io/crew-briggs/${{ inputs.container-name }}:1.0.${{github.run_number}}

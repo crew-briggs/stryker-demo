@@ -25,21 +25,12 @@ jobs:
       run: dotnet restore Calculator/Calculator.sln
     - name: Build
       run: dotnet build Calculator/Calculator.sln --no-restore
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v2
+    - name: Deploy container
+      uses: ./.github/actions/deploy-container
       with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-        file: "./Calculator/Calculator/Dockerfile"
-        context: Calculator
-        push: true
-        tags: |
-          ghcr.io/crew-briggs/calculator:latest
-          ghcr.io/crew-briggs/calculator:1.0.${{github.run_number}}
+        container-name: calculator
+        container-path: "./Calculator/Calculator/Dockerfile"
+        container-context: Calculator
   deploydev:
     runs-on: ubuntu-latest
     environment: Dev
