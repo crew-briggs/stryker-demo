@@ -40,4 +40,12 @@ jobs:
         tags: |
           ghcr.io/crew-briggs/calculator:latest
           ghcr.io/crew-briggs/calculator:1.0.${{github.run_number}}
-        
+  deploydev:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Echo
+      shell: bash
+      run: echo "hello"
+      
