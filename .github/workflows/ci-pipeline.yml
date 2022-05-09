@@ -28,6 +28,7 @@ jobs:
     - name: Deploy container
       uses: ./.github/actions/deploy-container
       with:
+        ghcr-username: ${{ github.repository_owner }}
         ghcr-password: ${{ secrets.GITHUB_TOKEN }}
         container-name: calculator
         container-path: "./Calculator/Calculator/Dockerfile"
