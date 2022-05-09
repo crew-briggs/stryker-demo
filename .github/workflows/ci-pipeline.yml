@@ -42,10 +42,21 @@ jobs:
           ghcr.io/crew-briggs/calculator:1.0.${{github.run_number}}
   deploydev:
     runs-on: ubuntu-latest
+    environment: Dev
     needs: [ build ]
     steps:
     - uses: actions/checkout@v3
     - name: Echo
       shell: bash
       run: echo "hello"
+      
+  deploystaging:
+    runs-on: ubuntu-latest
+    environment: Staging
+    needs: [ deploydev ]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Echo
+      shell: bash
+      run: echo "hello from staging"
       
