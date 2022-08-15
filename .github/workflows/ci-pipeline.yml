@@ -56,11 +56,15 @@ jobs:
       id: glob
       with: 
         files: StrykerOutput/**/reports/mutation-report.html
-  
+
+    - name: Show all matching files
+      run: |
+        echo "${{ steps.glob.outputs.paths }}"
+        
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2.2.0
       if: github.event_name == 'pull_request'
       with:
         recreate: true
-        path: steps.glob.outputs.paths[0]
+        path:  "${{ steps.glob.outputs.paths[0] }}"
 
