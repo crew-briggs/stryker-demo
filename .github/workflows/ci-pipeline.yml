@@ -74,5 +74,5 @@ jobs:
           prefix: Here are the artifacts 
           suffix: Have a nice day.
           format: name
-          addTo: pullandissues
+          addTo: pull
 
