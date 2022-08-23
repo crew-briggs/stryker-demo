@@ -42,6 +42,7 @@ jobs:
     - name: Upload Mutation Report
       uses: actions/upload-artifact@v3.0.0
       with:
+        if: ${{ success() || failure() }}
         name: mutation-report
         path: StrykerOutput
     - name: Add Traditional Coverage PR Comment
