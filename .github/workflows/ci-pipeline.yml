@@ -39,7 +39,6 @@ jobs:
         thresholds: '80'
     - name: Mutation Test
       run: dotnet stryker -r markdown -r html -r cleartext
-      continue-on-error : true
     - name: Upload Mutation Report
       uses: actions/upload-artifact@v3.0.0
       with:
@@ -53,13 +52,14 @@ jobs:
         recreate: true
         path: code-coverage-results.md
     - name: Match Markdown Mutation Report
+      if: ${{ success() || failure() }}
       uses: tj-actions/glob@v10
       id: report
       with: 
         files: StrykerOutput/**/reports/mutation-report.md
     - name: Add Mutation Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2.2.0
-      if: github.event_name == 'pull_request'
+      if: github.event_name == 'pull_request' &&  (success() || failure())
       with:
         header: mutationcoverage
         recreate: true
