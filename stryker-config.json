@@ -3,7 +3,12 @@
     "test-projects": [ "./Calculator/Calculator.Tests/Calculator.Tests.csproj" ],
     "reporters": [
       "progress",
-      "html"
-    ]
+      "html",
+      "markdown"
+    ],
+    "thresholds": {
+      "low":100,
+      "break": 100
+    }
   }
 }
