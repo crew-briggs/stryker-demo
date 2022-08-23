@@ -67,7 +67,7 @@ jobs:
         path: ${{ steps.report.outputs.paths }}
     - name: add artifact links to pull request and related issues step
       uses: tonyhallett/artifacts-url-comments@v1.1.0
-      if: ${{ success() || failure() }}
+      if: github.event_name == 'pull_request' &&  (success() || failure())
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
