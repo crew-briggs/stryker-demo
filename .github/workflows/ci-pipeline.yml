@@ -48,6 +48,7 @@ jobs:
       uses: marocchino/sticky-pull-request-comment@v2.2.0
       if: github.event_name == 'pull_request'
       with:
+        header: traditionalcoverage
         recreate: true
         path: code-coverage-results.md
     - name: Match Markdown Mutation Report
@@ -59,6 +60,7 @@ jobs:
       uses: marocchino/sticky-pull-request-comment@v2.2.0
       if: github.event_name == 'pull_request'
       with:
+        header: mutationcoverage
         recreate: true
         path: ${{ steps.report.outputs.paths }}
 
