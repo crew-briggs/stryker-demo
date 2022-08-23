@@ -41,8 +41,8 @@ jobs:
       run: dotnet stryker -r markdown -r html -r cleartext
     - name: Upload Mutation Report
       uses: actions/upload-artifact@v3.0.0
+      if: ${{ success() || failure() }}
       with:
-        if: ${{ success() || failure() }}
         name: mutation-report
         path: StrykerOutput
     - name: Add Traditional Coverage PR Comment
@@ -53,9 +53,9 @@ jobs:
         recreate: true
         path: code-coverage-results.md
     - name: Match Markdown Mutation Report
-      if: success() || failure()
       uses: tj-actions/glob@v10
       id: report
+      if: success() || failure()
       with: 
         files: StrykerOutput/**/reports/mutation-report.md
     - name: Add Mutation Coverage PR Comment
