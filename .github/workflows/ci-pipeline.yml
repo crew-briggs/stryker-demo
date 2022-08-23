@@ -38,29 +38,41 @@ jobs:
         output: both
         thresholds: '80'
     - name: Mutation Test
-      run: dotnet stryker
+      run: dotnet stryker -r markdown -r html -r cleartext
     - name: Upload Mutation Report
       uses: actions/upload-artifact@v3.0.0
+      if: ${{ success() || failure() }}
       with:
         name: mutation-report
         path: StrykerOutput
-    - name: Add Coverage PR Comment
+    - name: Add Traditional Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2.2.0
       if: github.event_name == 'pull_request'
       with:
+        header: traditionalcoverage
         recreate: true
         path: code-coverage-results.md
-
-    - name: Glob match
+    - name: Match Markdown Mutation Report
       uses: tj-actions/glob@v10
-      id: glob
+      id: report
+      if: success() || failure()
       with: 
-        files: StrykerOutput/**/reports/mutation-report.html
-  
-    - name: Add Coverage PR Comment
+        files: StrykerOutput/**/reports/mutation-report.md
+    - name: Add Mutation Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2.2.0
-      if: github.event_name == 'pull_request'
+      if: github.event_name == 'pull_request' &&  (success() || failure())
       with:
+        header: mutationcoverage
         recreate: true
-        path: steps.glob.outputs.paths[0]
+        path: ${{ steps.report.outputs.paths }}
+    - name: add artifact links to pull request and related issues step
+      uses: tonyhallett/artifacts-url-comments@v1.1.0
+      if: github.event_name == 'pull_request' &&  (success() || failure())
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          prefix: Here are the artifacts 
+          suffix: Have a nice day.
+          format: name
+          addTo: pull
 
