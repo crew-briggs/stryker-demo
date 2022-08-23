@@ -53,7 +53,7 @@ jobs:
         recreate: true
         path: code-coverage-results.md
     - name: Match Markdown Mutation Report
-      if: ${{ success() || failure() }}
+      if: success() || failure()
       uses: tj-actions/glob@v10
       id: report
       with: 
